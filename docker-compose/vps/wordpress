@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+   db:
+     image: mysql:5.7
+     container_name: wordpress_dev-db
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
+       MYSQL_DATABASE: ${DB_NAME}
+       MYSQL_USER: ${DB_USER}
+       MYSQL_PASSWORD: ${DB_PASSWD}
+     networks:
+       - wordpress_dev_network
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     container_name: wordpress_dev-app
+     ports:
+       - "127.0.0.1:7000:80"
+     restart: always
+     volumes:
+       - ./wp:/var/www/html
+       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+     environment:
+       WORDPRESS_DB_HOST: ${DB_HOST}
+       WORDPRESS_DB_USER: ${DB_USER}
+       WORDPRESS_DB_PASSWORD: ${DB_PASSWD}
+       WORDPRESS_DB_NAME: ${DB_NAME}
+     networks:
+       - wordpress_dev_network
+volumes:
+    db_data: {}
+networks:
+  wordpress_dev_network:
+       driver: bridge
