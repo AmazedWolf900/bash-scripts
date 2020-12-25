@@ -1,0 +1,11 @@
+# location: /etc/systemd/system
+
+[Unit]
+Description=Send info through MQTT to Hassio instance
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/send_info
+
+[Install]
+WantedBy=multi-user.target
