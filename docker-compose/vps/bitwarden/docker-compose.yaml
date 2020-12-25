@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  bitwarden:
+    image: bitwardenrs/server:latest #swap tag to raspberry to run on a raspberry pi
+    container_name: bitwarden-app
+#    expose:
+#      - "80"
+    volumes:
+      - bitwarden:/data
+    restart: unless-stopped
+    networks:
+      - bitwarden-network
+
+  nginx:
+    image: nginx:latest
+    container_name: bitwarden-nginx
+    ports:
+#      - "7040:80"
+      - "127.0.0.1:7040:443"
+    volumes:
+      - ./data/nginx:/etc/nginx
+      - ./data/ssl:/etc/ssl
+    networks:
+      - bitwarden-network
+
+volumes:
+  bitwarden:
+
+networks:
+  bitwarden-network:
