@@ -14,12 +14,12 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWD}
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
-    restart: unless-stopped
+    restart: always
 
   redis:
     image: redis:latest
     container_name: nextcloud-redis
-    restart: unless-stopped
+    restart: always
     networks:
       - nextcloud_network
     volumes:
@@ -49,7 +49,25 @@ services:
       - MYSQL_USER=${DB_USER}
       - MYSQL_HOST=${DB_HOST}
       - REDIS_HOST=redis
-    restart: unless-stopped
+    restart: always
+
+  cron:
+    image: nextcloud
+    container_name: nextcloud-cron
+    networks:
+      - nextcloud_network
+    volumes:
+      - nextcloud:/var/www/html
+      - ./app/config:/var/www/html/config
+      - ./app/custom_apps:/var/www/html/custom_apps
+      - ./app/data:/var/www/html/data
+      - ./app/themes:/var/www/html/themes
+      - /etc/localtime:/etc/localtime:ro
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+      - redis
+    restart: always
 
 volumes:
   nextcloud:
