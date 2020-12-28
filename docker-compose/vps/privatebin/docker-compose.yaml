@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+
+  app:
+    image: jgeusebroek/privatebin
+    container_name: privatebin-app
+    ports:
+      - 127.0.0.1:7050:80
+    volumes:
+      - ./app/data:/privatebin/data
+      - ./app/config:/privatebin/cfg
+    restart: always
