@@ -22,6 +22,7 @@ alias nginxtest="sudo service nginx testconfig"
 alias nginxstop="sudo service nginx stop"
 alias nginxstart="sudo service nginx start"
 alias nginxreload="sudo service nginx reload"
+alias nginxstatus="sudo service nginx status"
 
 # Package managing
 alias update="sudo apt update"
