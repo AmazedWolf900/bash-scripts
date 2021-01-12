@@ -2,7 +2,6 @@
 # File:     .zshrc   ZSH resource file                             #
 # Version:  0.1.16                                                 #
 # Author:   Øyvind "Mr.Elendig" Heggstad <mrelendig@har-ikkje.net> #
-# Modified: Tomas "Wilde" Weber <webertomas01@gmail.com>
 #------------------------------------------------------------------#
 
 #-----------------------------
@@ -60,6 +59,10 @@ alias ll="ls --color -lh"
 alias spm="sudo pacman"
 alias gr="gvim --remote-silent"
 alias vr="vim --remote-silent"
+
+alias vps="ssh vps"
+alias server="ssh server"
+alias ipp="curl ifconfig.co"
 
 #------------------------------
 # ShellFuncs
@@ -145,23 +148,9 @@ setprompt() {
     p_host='%F{green}%M%f'
   fi
 
-#  PS1=${(j::Q)${(Z:Cn:):-$'
-#    %F{yellow}[ %f
-#    %(!.%F{red}%n%f.%F{green}%n%f)
-#    %F{yellow}@%f
-#    ${p_host}
-#    %F{cyan}:%~%f
-#    %F{yellow} ]%f
-#    %(!.%F{red}%#%f.%F{cyan}$%f)
-#    " "
-#  '}}
-
   PS1='%B%F{yellow}[ %f%(!.%F{red}%n%f.%F{green}%n%f)%F{yellow}@%f${p_host}%F{yellow}: %F{cyan}%~%f%F{yellow} ]%f%(!.%F{red}%#%f.%F{yellow}$%f) '
 
   PS2=$'%_>'
   RPROMPT=$'${vcs_info_msg_0_}'
 }
 setprompt
-
-
-# vim: set ts=2 sw=2 et:
